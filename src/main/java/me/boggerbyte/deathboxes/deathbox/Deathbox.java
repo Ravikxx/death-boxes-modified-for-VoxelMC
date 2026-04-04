@@ -98,5 +98,14 @@ public class Deathbox {
     public boolean isBreakable() {
         return breakable;
     }
+    private boolean beingViewed = false;
+
+public boolean isBeingViewed() {
+    return beingViewed;
+}
+
+public void setBeingViewed(boolean beingViewed) {
+    this.beingViewed = beingViewed;
+}
 
 }
