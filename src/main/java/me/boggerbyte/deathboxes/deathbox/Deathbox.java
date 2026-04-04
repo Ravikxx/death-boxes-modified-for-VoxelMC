@@ -13,7 +13,7 @@ import org.bukkit.plugin.Plugin;
 public class Deathbox {
     public static final String metadataKey = "deathboxes_deathbox";
 
-    private final Player owner;
+    private final OfflinePlayer owner;
     private final Inventory inventory;
     private final int exp;
     private final boolean locked;
