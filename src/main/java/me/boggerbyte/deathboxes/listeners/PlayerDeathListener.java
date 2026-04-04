@@ -19,9 +19,13 @@ public class PlayerDeathListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         event.getDrops().clear();
         event.setDroppedExp(0);
+        
+
 
         var player = event.getEntity();
         var deathbox = deathboxFactory.create(player);
         deathbox.spawnFalling(plugin, player.getLocation());
+        
+        player.getInventory().clear();
     }
 }
