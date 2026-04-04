@@ -79,11 +79,13 @@ public class Deathbox {
     public void openInventory(HumanEntity humanEntity) {
         humanEntity.openInventory(inventory);
 
-        if (sealed && humanEntity instanceof Player player) {
-            player.giveExp(exp);
-            sealed = false;
-        }
+    
+    if (sealed && humanEntity instanceof Player player && player.equals(owner)) {
+        sealed = false;
+        player.giveExp(exp);
     }
+}
+
 
     public Player getOwner() {
         return owner;
