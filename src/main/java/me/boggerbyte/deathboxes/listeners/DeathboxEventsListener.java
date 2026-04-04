@@ -63,4 +63,14 @@ public class DeathboxEventsListener implements Listener {
 
         deathbox.openInventory(event.getPlayer());
     }
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        if (!(event.getInventory().getHolder() instanceof Chest chest)) return;
+        var block = chest.getBlock();
+        var deathbox = fetchDeathboxValue(block);
+        if (deathbox == null) return;
+    
+        deathbox.setBeingViewed(false);
+}
+
 }
