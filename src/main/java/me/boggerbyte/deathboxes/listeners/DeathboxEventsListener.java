@@ -53,6 +53,9 @@ public class DeathboxEventsListener implements Listener {
         var block = chest.getBlock();
         var deathbox = fetchDeathboxValue(block);
         if (deathbox == null) return;
+        deathbox.setBeingViewed(true);
+        deathbox.openInventory(event.getPlayer());
+
 
         event.setCancelled(true);
 
