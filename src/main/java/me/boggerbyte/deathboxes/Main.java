@@ -4,6 +4,7 @@ import me.boggerbyte.deathboxes.deathbox.DeathboxFactory;
 import me.boggerbyte.deathboxes.listeners.DeathboxEventsListener;
 import me.boggerbyte.deathboxes.listeners.PlayerDeathListener;
 import me.boggerbyte.deathboxes.utils.Logger;
+import me.boggerbyte.deathboxes.listeners.InventoryClickListener;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -51,6 +52,7 @@ public final class Main extends JavaPlugin {
                 config.getInt("deathbox.duration"));
         getServer().getPluginManager().registerEvents(new DeathboxEventsListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(deathboxFactory), this);
+        getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
     }
 
     @Override
