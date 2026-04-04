@@ -66,6 +66,33 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DeathboxEventsListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(deathboxFactory), this);
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
+        File gravesFile = new File(getDataFolder(), "graves.yml");
+if (gravesFile.exists()) {
+    FileConfiguration storage = YamlConfiguration.loadConfiguration(gravesFile);
+    
+    for (String key : storage.getKeys(false)) {
+        String worldName = storage.getString(key + ".world");
+        int x = storage.getInt(key + ".x");
+        int y = storage.getInt(key + ".y");
+        int z = storage.getInt(key + ".z");
+        UUID ownerUUID = UUID.fromString(storage.getString(key + ".owner"));
+        boolean unlocked = storage.getBoolean(key + ".unlocked");
+        
+        var world = getServer().getWorld(worldName);
+        if (world == null) continue;
+        
+        var location = new Location(world, x, y, z);
+        var owner = getServer().getOfflinePlayer(ownerUUID);
+        
+        var inventory = getServer().createInventory(null, 45);
+        List<ItemStack> items = (List<ItemStack>) storage.getList(key + ".items");
+        if (items != null) inventory.setContents(items.toArray(new ItemStack[0]));
+
+        var grave = new Deathbox(owner, inventory, 0, !unlocked, false, new Hologram(List.of()), -1);
+        grave.spawn(this, location);
+    }
+}
+
     }
 
 @Override
