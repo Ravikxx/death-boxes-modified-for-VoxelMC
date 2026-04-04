@@ -1,0 +1,22 @@
+public class InventoryClickListener implements Listener {
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        var inventory = event.getInventory();
+        var block = event.getInventory().getLocation();
+        
+        if (block == null) return;
+        
+        var bukkitBlock = block.getBlock();
+        if (!bukkitBlock.hasMetadata(Deathbox.metadataKey)) return;
+
+        // cancel anything that isn't taking items
+        var action = event.getAction();
+        if (action == InventoryAction.PLACE_ALL ||
+            action == InventoryAction.PLACE_ONE ||
+            action == InventoryAction.PLACE_SOME ||
+            action == InventoryAction.SWAP_WITH_CURSOR) {
+            event.setCancelled(true);
+        }
+    }
+}
