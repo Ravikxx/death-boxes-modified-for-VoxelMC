@@ -107,5 +107,10 @@ public boolean isBeingViewed() {
 public void setBeingViewed(boolean beingViewed) {
     this.beingViewed = beingViewed;
 }
+private boolean unlocked = false;
+
+public boolean isUnlocked() {
+    return unlocked;
+}
 
 }
