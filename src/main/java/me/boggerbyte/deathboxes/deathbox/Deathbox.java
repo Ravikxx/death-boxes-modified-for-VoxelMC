@@ -51,18 +51,24 @@ public class Deathbox {
         fallingBlock.setMetadata(Deathbox.metadataKey, new FixedMetadataValue(plugin, this));
     }
 
-    public void spawn(Plugin plugin, Location location) {
-        block = location.getBlock();
-        block.setType(Material.CHEST);
-        block.setMetadata(Deathbox.metadataKey, new FixedMetadataValue(plugin, this));
+public void spawn(Plugin plugin, Location location) {
+    block = location.getBlock();
+    block.setType(Material.CHEST);
+    block.setMetadata(Deathbox.metadataKey, new FixedMetadataValue(plugin, this));
 
-        var blockLocation = block.getLocation();
-        var blockCenterLocation = blockLocation.add(blockLocation.getX() > 0 ? -0.5 : 0.5, 0.5, blockLocation.getZ() > 0 ? -0.5 : 0.5);
-        hologram.spawn(plugin, blockCenterLocation, duration);
+    var blockLocation = block.getLocation();
+    var blockCenterLocation = blockLocation.add(blockLocation.getX() > 0 ? -0.5 : 0.5, 0.5, blockLocation.getZ() > 0 ? -0.5 : 0.5);
+    hologram.spawn(plugin, blockCenterLocation, duration);
 
-        if (duration != -1) plugin.getServer().getScheduler()
-                .runTaskLater(plugin, () -> despawn(plugin, false), duration);
+    if (duration != -1) {
+        plugin.getServer().getScheduler()
+            .runTaskLater(plugin, () -> unlocked = true, duration / 2);
+        
+        plugin.getServer().getScheduler()
+            .runTaskLater(plugin, () -> despawn(plugin, false), duration);
     }
+}
+
 
     public void despawn(Plugin plugin, boolean dropContents) {
         hologram.remove();
