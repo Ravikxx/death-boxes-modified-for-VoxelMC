@@ -68,24 +68,27 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
     }
 
-    @Override
-    public void onDisable() {
-        FileConfiguration storage = new YamlConfiguration();
+@Override
+public void onDisable() {
+    FileConfiguration storage = new YamlConfiguration();
+    File gravesFile = new File(getDataFolder(), "graves.yml");
 
-for (Deathbox grave : activeGraves) {
-    String id = UUID.randomUUID().toString();
-    storage.set(id + ".world", grave.getBlock().getWorld().getName());
-    storage.set(id + ".x", grave.getBlock().getX());
-    storage.set(id + ".y", grave.getBlock().getY());
-    storage.set(id + ".z", grave.getBlock().getZ());
-    storage.set(id + ".owner", grave.getOwner().getUniqueId().toString());
-    storage.set(id + ".unlocked", grave.isUnlocked());
-    storage.set(id + ".items", grave.getInventory().getContents());
+    int i = 0;
+    for (Deathbox grave : activeGraves) {
+        storage.set(i + ".world", grave.getBlock().getWorld().getName());
+        storage.set(i + ".x", grave.getBlock().getX());
+        storage.set(i + ".y", grave.getBlock().getY());
+        storage.set(i + ".z", grave.getBlock().getZ());
+        storage.set(i + ".owner", grave.getOwner().getUniqueId().toString());
+        storage.set(i + ".unlocked", grave.isUnlocked());
+        storage.set(i + ".items", Arrays.asList(grave.getInventory().getContents()));
+        i++;
+    }
+
+    try { storage.save(gravesFile); } 
+    catch (IOException e) { e.printStackTrace(); }
 }
 
-storage.save(new File(getDataFolder(), "graves.yml"));
-
-    }
 
     public static Plugin getInstance() {
         return Main.getPlugin(Main.class);
