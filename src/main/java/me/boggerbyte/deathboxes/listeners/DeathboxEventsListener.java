@@ -56,7 +56,7 @@ public class DeathboxEventsListener implements Listener {
 
         event.setCancelled(true);
 
-        if (deathbox.isLocked() && event.getPlayer().getUniqueId() != deathbox.getOwner().getUniqueId()) return;
+        if (deathbox.isLocked() && !event.getPlayer().getUniqueId().equals(deathbox.getOwner().getUniqueId())) return;
 
         deathbox.openInventory(event.getPlayer());
     }
