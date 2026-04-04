@@ -20,6 +20,8 @@ public class Deathbox {
     private final boolean breakable;
     private final Hologram hologram;
     private final int duration;
+public Block getBlock() { return block; }
+public Inventory getInventory() { return inventory; }
 
     public Deathbox(
             Player owner,
