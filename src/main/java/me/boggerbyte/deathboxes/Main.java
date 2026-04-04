@@ -8,12 +8,25 @@ import me.boggerbyte.deathboxes.listeners.InventoryClickListener;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.logging.Level;
 
 public final class Main extends JavaPlugin {
+    private static final List<Deathbox> activeGraves = new ArrayList<>();
 
+    public static void addGrave(Deathbox grave) {
+        activeGraves.add(grave);
+    }
+
+    public static void removeGrave(Deathbox grave) {
+        activeGraves.remove(grave);
+    }
+
+    public static List<Deathbox> getActiveGraves() {
+        return activeGraves;
+    }
     @Override
     public void onLoad() {
         saveDefaultConfig();
@@ -57,7 +70,21 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        FileConfiguration storage = new YamlConfiguration();
+
+for (Deathbox grave : activeGraves) {
+    String id = UUID.randomUUID().toString();
+    storage.set(id + ".world", grave.getBlock().getWorld().getName());
+    storage.set(id + ".x", grave.getBlock().getX());
+    storage.set(id + ".y", grave.getBlock().getY());
+    storage.set(id + ".z", grave.getBlock().getZ());
+    storage.set(id + ".owner", grave.getOwner().getUniqueId().toString());
+    storage.set(id + ".unlocked", grave.isUnlocked());
+    storage.set(id + ".items", grave.getInventory().getContents());
+}
+
+storage.save(new File(getDataFolder(), "graves.yml"));
+
     }
 
     public static Plugin getInstance() {
