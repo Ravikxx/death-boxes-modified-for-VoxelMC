@@ -22,7 +22,7 @@ public class Deathbox {
     private final int duration;
 
     public Deathbox(
-            Player owner,
+            OfflinePlayer owner,
             Inventory inventory,
             int exp,
             boolean locked,
@@ -95,7 +95,7 @@ public void spawn(Plugin plugin, Location location) {
 }
 
 
-    public Player getOwner() {
+    public OfflinePlayer getOwner() {
         return owner;
     }
 
