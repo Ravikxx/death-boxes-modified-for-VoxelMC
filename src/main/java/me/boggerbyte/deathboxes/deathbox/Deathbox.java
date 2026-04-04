@@ -54,6 +54,7 @@ public class Deathbox {
 public void spawn(Plugin plugin, Location location) {
     block = location.getBlock();
     block.setType(Material.CHEST);
+    Main.addGrave(this);
     block.setMetadata(Deathbox.metadataKey, new FixedMetadataValue(plugin, this));
 
     var blockLocation = block.getLocation();
@@ -71,6 +72,7 @@ public void spawn(Plugin plugin, Location location) {
 
 
     public void despawn(Plugin plugin, boolean dropContents) {
+        Main.removeGrave(this);
         hologram.remove();
 
         if (block == null) return;
