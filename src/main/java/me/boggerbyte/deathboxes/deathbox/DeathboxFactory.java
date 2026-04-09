@@ -13,18 +13,21 @@ public class DeathboxFactory {
     private final boolean locked;
     private final boolean breakable;
     private final int duration;
+    private final int unlockAfter;
 
     public DeathboxFactory(
             String hologramLayout,
             boolean storeExp,
             boolean locked,
             boolean breakable,
-            int duration) {
+            int duration,
+            int unlockAfter) {
         this.hologramLayout = hologramLayout;
         this.storeExp = storeExp;
         this.locked = locked;
         this.breakable = breakable;
         this.duration = duration;
+        this.unlockAfter = unlockAfter;
     }
 
     public Deathbox create(Player owner) {
@@ -40,6 +43,6 @@ public class DeathboxFactory {
                 .toList();
         var hologram = new Hologram(hologramRawLines);
 
-        return new Deathbox(owner, inventory, exp, locked, breakable, hologram, duration);
+        return new Deathbox(owner, inventory, exp, locked, breakable, hologram, duration, unlockAfter);
     }
 }

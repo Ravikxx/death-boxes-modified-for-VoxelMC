@@ -26,6 +26,13 @@ public class Hologram {
         var reversedRawLines = new ArrayList<>(rawLines);
         Collections.reverse(reversedRawLines);
 
+        if (reversedRawLines.isEmpty()) {
+            lines.clear();
+            tasks.forEach(BukkitRunnable::cancel);
+            tasks.clear();
+            return;
+        }
+
         List<Entity> lines = new ArrayList<>();
         for (String reversedRawLine : reversedRawLines) {
             var line = location.getWorld().spawn(location, AreaEffectCloud.class);
@@ -70,5 +77,9 @@ public class Hologram {
         lines.clear();
         tasks.forEach(BukkitRunnable::cancel);
         tasks.clear();
+    }
+
+    public boolean isSpawned() {
+        return !lines.isEmpty();
     }
 }
